@@ -1,7 +1,20 @@
-import { BrowserRouter, Router } from 'react-router-dom';
-import Notes from './components/Notes';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Note from './pages/Note';
+import Notes from './pages/Notes';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Notes />,
+  },
+  {
+    path: '/:id',
+    element: <Note />,
+  }
+]);
+
 export default function App() {
-  <BrowserRouter>
-    <Router path='/' element={Notes}></Router>
-  </BrowserRouter>
+  return (
+    <RouterProvider router={router} />
+  );
 }

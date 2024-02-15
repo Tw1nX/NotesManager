@@ -1,21 +1,13 @@
-export function saveNote(ref, setState) {
-    const content = ref.current.value;
-    setState((prevNotes) => {
-      const newNotes = [...prevNotes, { content, id: prevNotes.length }];
-      localStorage.setItem('notes', JSON.stringify(newNotes));
-      return newNotes;
-    });
-    ref.current.value = '';
-  }
+import { useNotes } from '../store';
 
-export function deleteNote(id, setState) {
-    setState((prevNotes) => {
-      const updatedNotes = prevNotes.filter((item) => item.id !== id);
-      localStorage.setItem('notes', JSON.stringify(updatedNotes));
-      return updatedNotes;
-    });
-  }
+export function saveNote(ref) {
+  const content = ref.current.value;
+  useNotes.getState().setNotes({ content, id: useNotes.getState().notes.length });
+  ref.current.value = '';
+}
 
-export function sortNotes(setState) {
-    setState((prevNotes) => [...prevNotes].sort((a, b) => a.id - b.id));
+export function deleteNote(id) {
+  useNotes.getState().setNotes((prevNotes) =>
+    prevNotes.filter((item) => item.id !== id)
+  );
 }
